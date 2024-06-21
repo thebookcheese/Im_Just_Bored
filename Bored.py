@@ -14,6 +14,9 @@ def Blackjack():
     Card1 = random.randint(1,11)
     Card2 = random.randint(1,11)
     Card3 = 0
+    Card4 = 0
+    Count = 0
+    StoodCount = 0
     if Card1 == 11:
         Ace = input("Should it be a 1 or 10 \n Type 1 if 1 \n Type 2 if 10")        
         if Ace == 1:
@@ -33,27 +36,48 @@ def Blackjack():
     else:
         pass
     print("You got ",Card1," and ",Card2)
-    while (Card1 + Card2 + Card3) != 21 or (Card1 + Card2 + Card3) < 21 or (AiCard1 + AiCard2 + AiCard3) != 21 or (AiCard1 + AiCard2 + AiCard3) < 21:
+    while (Card1 + Card2 + Card3 + Card4) != 21 or (Card1 + Card2 + Card3 + Card4) < 21 or (AiCard1 + AiCard2 + AiCard3 + AiCard4) != 21 or (AiCard1 + AiCard2 + AiCard3 + AiCard4) < 21:
         if (Card1 + Card2 + Card3) > 21:
             print("Bust, you lose.")
             exit()
         elif (Card1 + Card2 + Card3) < 21:
             Pick = int(input("Do you want to twist (1) or stick (2)"))
+            OriginalPick = Pick
             if Pick == 1:
-                Card3 = random.randint(1,10)
-                if (Card1 + Card2 + Card3) > 21:
-                    print("Bust, you lose")
-                    exit()
-                elif (Card1 + Card2 + Card3) == 21:
-                    print("You win")
-                    exit()
-                else:
-                    print("You got ",Card3)
-                    Pick = 2
+                if Count == 0:
+                    Card3 = random.randint(1,10)
+                    Count = Count + 1
+                    if (Card1 + Card2 + Card3 + Card4) > 21:
+                        print("Bust, you lose")
+                        exit()
+                    elif (Card1 + Card2 + Card3 + Card4) == 21:
+                        print("You win")
+                        exit()
+                    else:
+                        print("You got ",Card3)
+                        Pick = 2
+                elif Count == 1:
+                    Card4 = random.randint(1,10)
+                    Count = Count + 1
+                    if (Card1 + Card2 + Card3 + Card4) > 21:
+                        print("Bust, you lose")
+                        exit()
+                    elif (Card1 + Card2 + Card3 + Card4) == 21:
+                        print("You win")
+                        exit()
+                    else:
+                        print("You got ",Card4)
+                        Pick = 2
             elif Pick == 2:
+                if OriginalPick == 2:
+                    StoodCount = StoodCount + 1
+                else:
+                    pass
                 AiCard1 = random.randint(1,11)
                 AiCard2 = random.randint(1,11)
                 AiCard3 = 0
+                AiCard4 = 0
+                AiStoodCount = 0
                 if AiCard1 == 11:
                     if (AiCard2 + 1) == 21:
                         AiCard1 = 1
@@ -90,11 +114,35 @@ def Blackjack():
                         pass
                 else:
                     print("Ai stood")
+                    AiStoodCount = AiStoodCount + 1
+                    if AiStoodCount == 1 and StoodCount == 1:
+                        if (Card1 + Card2 + Card3 + Card4) > 21:
+                            print("You lose")
+                            exit()
+                        elif (21 -(Card1 + Card2 + Card3 + Card4)) > (21 - (AiCard1 + AiCard2 + AiCard3 + AiCard4)):
+                            print("You lose")
+                            exit()
+                        elif (21 - (Card1 + Card2 + Card3 + Card4)) < (21 - (AiCard1 + AiCard2 + AiCard3 + AiCard4)):
+                            print("You win")
+                            exit()
+                        elif (Card1 + Card2 + Card3 + Card4) == 21 and (AiCard1 + AiCard2 + AiCard3 + AiCard4) == 21:
+                            print("Draw")
+                            exit()
+                        elif (Card1 + Card2 + Card3 + Card4) == 21:
+                            print("You win")
+                            exit()
+                        elif (AiCard1 + AiCard2 + AiCard3 + AiCard4) == 21:
+                            print("You lose")
+                            exit()
+                    else:
+                        StoodCount = 0
+                        AiStoodCount = 0
 
 
 
-
-
+def AGH():
+    pass
+    
 Run = int(input("Software run? \n Dice Thing (1) \n Blackjack (2) \n"))
 if Run == 1:
     Dice()
