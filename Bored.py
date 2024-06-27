@@ -1,4 +1,5 @@
 import random
+import RPGmain
 
 def Dice():
     Roll1 = random.randint(1,6)
@@ -140,8 +141,8 @@ def Blackjack():
 
 
 
-def AGH():
-    pass
+def RPG_but_bad():
+    RPGmain.main()
     
 Run = int(input("Software run? \n Dice Thing (1) \n Blackjack (2) \n"))
 if Run == 1:
